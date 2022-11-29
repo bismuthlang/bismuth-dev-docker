@@ -1,13 +1,13 @@
 FROM ubuntu:22.04
 
-RUN apt update && apt -y install locales
+RUN apt-get update && apt-get -y install locales
 
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8  
 ENV LANGUAGE en_US:en  
 ENV LC_ALL en_US.UTF-8 
 
-RUN apt install --no-install-recommends -y \
+RUN apt-get install --no-install-recommends -y \
 git \
 openjdk-18-jdk \
 build-essential \
@@ -18,10 +18,12 @@ cmake \
 clang \
 zlib1g-dev
 
-RUN apt-get install -y llvm llvm-12
+RUN apt-get install -y llvm-12
 
 # Code Coverage
 RUN apt-get install -y lcov
+
+ENV PATH="${PATH}:/lib/llvm-12/bin"
 
 # Set container to use clang and clang++ instead of gcc
 ENV CC clang
