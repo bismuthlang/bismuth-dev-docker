@@ -1,21 +1,25 @@
 ## About
-This is a docker image that might be useful if you're in CS 4533. Right now, it just gives you a ready-to-use antlr shared library, as well as cmake, llvm, and other basic tools. However, it could be extended to incorporate more parts of the toolchain as the course progresses. 
+This is a docker image that might be useful if you're in CS 4533 (Techniques of Programming Language Translation) or CS 544 (Compiler Construction). Right now, it just you a ready-to-use antlr shared library, as well as cmake, llvm, lcov (code coverage), and other basic tools. However, the toolchain can be extended to incorportate other tools as needed.
 
-## Usage
+Thank you to [Jack Sullivan](https://github.com/jhsul) for making this initial [repository](https://github.com/jhsul/cs4533-docker) and [docker image](https://hub.docker.com/r/jackhsullivan/cs4533-docker) from which I have extended and build my own image. 
+
+## Downloading the Docker Image
 
 This takes a long time but you only need to do it once:
 
 ```sh
-docker pull jackhsullivan/cs4533-docker
+docker pull ahfriedman/cs544-cs4533-docker
 ```
+
+## Running the Docker Image 
 
 Run with:
 
 ```sh
-docker run -it -v ~/<your_class_folder>:/home/shared jackhsullivan/cs4533-docker
+docker run -it -v ~/<your_class_folder>:/home/shared ahfriedman/cs544-cs4533-docker
 ```
 
-## Calculator Example
+### Calculator Example
 
 On your *host* machine, clone the course repository 
 
@@ -23,20 +27,27 @@ On your *host* machine, clone the course repository
 git clone https://bitbucket.org/gfp-public-course-materials/compiler-projects-all/src/master/ ~/cs4533
 ```
 
-
 Run the docker image with the shared folder
 
 ```sh
 docker run -it -v ~/cs4533/1-calculator-starter:/home/shared jackhsullivan/cs4533-docker
 ```
 
-Now, in the docker container
+## Using the Docker Image
+
+Once you have run the docker image with the shared folder, you should be prompted with a terminal. The terminal will start in the working directory of /home/. The project files (the shared folder) is located at /home/shared. 
+
+The first time you open the project in the docker image, you'll want to do is copy the antlr runtime into the project's files as shown below *(Note: this should only need to be done once. Afterwards, the files should stay updated across runs of the docker image)*.
 
 ```sh
 cd /home
 cp libantlr4-runtime.a shared/antlr/lib/
 cd shared
+```
 
+Once in the `/home/shared` directory (assuming that it is also the top-level directory of your project), you should be abel to build and run the project as per usual: 
+
+```sh
 cmake -S . -B build
 cmake --build build
 cmake --install build
