@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.10
 
 RUN apt-get update && apt-get -y install locales
 
@@ -9,21 +9,23 @@ ENV LC_ALL en_US.UTF-8
 
 RUN apt-get install --no-install-recommends -y \
 git \
-openjdk-18-jdk \
+openjdk-21-jdk \
 build-essential \
 pkg-config \
 uuid-dev \
 make \
 cmake \
 clang \
-zlib1g-dev
+zlib1g-dev \
+libzstd-dev
 
-RUN apt-get install -y llvm-12
+RUN apt-get install -y llvm-19
+RUN apt-get install -y libclang-rt-19-dev
 
 # Code Coverage
 RUN apt-get install -y lcov
 
-ENV PATH="${PATH}:/lib/llvm-12/bin"
+ENV PATH="${PATH}:/lib/llvm-19/bin"
 
 # Set container to use clang and clang++ instead of gcc
 ENV CC clang
