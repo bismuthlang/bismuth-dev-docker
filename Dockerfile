@@ -20,7 +20,7 @@ zlib1g-dev \
 libzstd-dev
 
 RUN apt-get install -y llvm-19
-RUN apt-get install libclang-rt-19-dev
+RUN apt-get install -y libclang-rt-19-dev
 
 # Code Coverage
 RUN apt-get install -y lcov
